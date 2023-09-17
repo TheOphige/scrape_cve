@@ -2,6 +2,7 @@
 This project scrapes data and inserts it in mysql database for processing..
 
 
+## Steps
 Install _requirements.txt_ in a virtual environment
 
 ```
