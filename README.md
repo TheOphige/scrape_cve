@@ -1,4 +1,6 @@
 # scrape_cve
+[![Python application test with Github Actions](https://github.com/TheOphige/scrape_cve/actions/workflows/main.yml/badge.svg)](https://github.com/TheOphige/scrape_cve/actions/workflows/main.yml)
+
 This project scrapes data and inserts it in mysql database for processing..
 
 
