@@ -7,6 +7,9 @@ url = os.path.join(current_dir, 'source-EXPLOIT-DB.html')
 top_dir = dirname(dirname(dirname(current_dir)))
 sql_file = os.path.join(top_dir, 'sql_scripts/populate.sql')
 
+# delete file to avoid wahala
+os.remove(sql_file)
+
 class ScrapeCveSpider(scrapy.Spider):
     name = "scrape_cve"
     allowed_domains = ['cve.mitre.org']
@@ -39,6 +42,7 @@ class ScrapeCveSpider(scrapy.Spider):
             except Exception as err:
                 print(f"skipping due to: {err}")
             count += 1
+        clean_data(sql_file)
 
 
 def append_sql_file(exploit_id, cves):
@@ -49,3 +53,22 @@ def append_sql_file(exploit_id, cves):
         return
     with open(sql_file, 'a') as _f:
         _f.write(line)
+
+
+def clean_data(sql_file):
+    # Check if the file exists
+    if not os.path.exists(sql_file):
+        return
+    
+    # Read all lines from the file
+    with open(sql_file, 'r') as file:
+        lines = file.readlines()
+
+    # Remove the first ten lines
+    line = "USE cve;\n"
+    new_lines = lines[10:]
+
+    # Write the new lines back to the file
+    with open(sql_file, 'w') as file:
+        file.write(line)
+        file.writelines(new_lines)
